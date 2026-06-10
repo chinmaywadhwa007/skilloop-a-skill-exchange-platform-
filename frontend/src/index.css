@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float {
+  animation: floating 6s ease-in-out infinite;
+}
+body {
+  background: #f8f9ff;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 40px rgba(70,72,212,0.12);
+}
+
+.sidebar-item {
+  transition: all 0.3s ease;
+}
+
+.sidebar-item:hover {
+  transform: translateX(6px);
+}
