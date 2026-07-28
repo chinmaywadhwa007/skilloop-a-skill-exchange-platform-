@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../../components/auth/AuthLayout";
+import { useAuth } from "../../context/authContext";
+import { ROLES } from "../../utils/constants";
+
+const PASSWORD_RULE =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
 const Register = () => {
 
@@ -9,8 +14,12 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-   
+    role: ROLES.USER,
   });
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const { register } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -18,67 +27,36 @@ const Register = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      setError("Passwords do not match");
       return;
     }
 
-    // Get existing users
-    const existingUsers =
-      JSON.parse(localStorage.getItem("users")) || [];
-
-    // Check if email already exists
-    const userExists = existingUsers.find(
-      (user) => user.email === formData.email
-    );
-
-    if (userExists) {
-      alert("Email already registered");
-      return;
-    }
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-
-    if (!passwordRegex.test(formData.password)) {
-      alert(
-        "Password must contain uppercase, lowercase, number and special character"
+    if (!PASSWORD_RULE.test(formData.password)) {
+      setError(
+        "Password must be at least 8 characters and contain uppercase, lowercase, number and special character"
       );
       return;
     }
 
-    // Create user object
-    const newUser = {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-    };
-
-    // Add user
-    existingUsers.push(newUser);
-
-    // Save back to localStorage
-    localStorage.setItem(
-      "users",
-      JSON.stringify(existingUsers)
-    );
-
-    alert("Registration Successful!");
-
-    // Clear form
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      
-    });
-
-    console.log(
-      JSON.parse(localStorage.getItem("users"))
-    );
+    setSubmitting(true);
+    try {
+      await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+      });
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -132,6 +110,9 @@ const Register = () => {
         onSubmit={handleSubmit}
         className="space-y-5"
       >
+        {error && (
+          <p className="px-4 py-3 rounded-xl bg-red-50 text-sm text-red-600">{error}</p>
+        )}
 
         {/* Full Name */}
         <div>
@@ -257,9 +238,27 @@ const Register = () => {
           />
         </div>
 
+        {/* Role */}
+        <div>
+          <label className="block mb-2 text-sm font-semibold text-[#0b1c30]">
+            I want to join as
+          </label>
+
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-xl bg-[#eff4ff] border border-transparent outline-none transition-all duration-300 focus:border-[#4648d4] focus:ring-4 focus:ring-[#4648d4]/20"
+          >
+            <option value={ROLES.USER}>Learner</option>
+            <option value={ROLES.MENTOR}>Mentor (share your skills)</option>
+          </select>
+        </div>
+
         {/* Create Account Button */}
         <button
           type="submit"
+          disabled={submitting}
           className="
       group
       relative
@@ -283,7 +282,7 @@ const Register = () => {
     "
         >
           <span className="relative z-10">
-            Create Account
+            {submitting ? "Creating account..." : "Create Account"}
           </span>
 
           <span
