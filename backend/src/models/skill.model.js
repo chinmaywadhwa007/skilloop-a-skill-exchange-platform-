@@ -37,7 +37,7 @@ skillSchema.virtual("rating").get(function rating() {
 });
 
 skillSchema.virtual("learnerCount").get(function learnerCount() {
-  return this.learners.length;
+  return this.learners?.length ?? 0;
 });
 
 skillSchema.index({ title: "text", description: "text", tags: "text" });

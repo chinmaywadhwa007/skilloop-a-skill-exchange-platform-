@@ -13,14 +13,22 @@ import {
   Bell,
   Search,
   Plus,
-  Coins
+  Coins,
+  LogOut
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
 
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const currentUser =
-    JSON.parse(localStorage.getItem("currentUser"));
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-[#f8f9ff]">
@@ -67,6 +75,14 @@ const Dashboard = () => {
 
             <button className="p-2 rounded-full hover:bg-gray-100 transition">
               <Bell size={18} />
+            </button>
+
+            <button
+              onClick={handleLogout}
+              title="Log out"
+              className="p-2 rounded-full hover:bg-gray-100 transition cursor-pointer"
+            >
+              <LogOut size={18} />
             </button>
 
             <div className="w-8 h-8 rounded-full border border-gray-300 overflow-hidden ml-5">
