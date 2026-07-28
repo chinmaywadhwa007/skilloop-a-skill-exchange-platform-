@@ -5,6 +5,8 @@ import AuthLayout from "../../components/auth/AuthLayout";
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
+    const [error, setError] = useState("");
+    const [submitting, setSubmitting] = useState(false);
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -12,19 +14,18 @@ const Login = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        const user = users.find(
-            (u) => u.email === formData.email && u.password === formData.password
-        );
-        if (!user) {
-            alert("Invalid Email or Password");
-            return;
+        setError("");
+        setSubmitting(true);
+        try {
+            await login(formData);
+            navigate("/dashboard");
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setSubmitting(false);
         }
-        login(user);
-        alert(`Welcome ${user.name}`);
-        navigate("/dashboard");
     };
 
     return (
@@ -41,6 +42,9 @@ const Login = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+                {error && (
+                    <p className="px-4 py-3 rounded-xl bg-red-50 text-sm text-red-600">{error}</p>
+                )}
                 <div className="mb-5">
                     <label className="block mb-2 text-sm font-semibold text-[#0b1c30]">Email Address</label>
                     <input type="email" name="email" placeholder="enter your email" value={formData.email} onChange={handleChange} required
@@ -56,8 +60,8 @@ const Login = () => {
                         className="w-full px-4 py-3 rounded-xl bg-[#eff4ff] border border-transparent outline-none transition-all duration-300 focus:border-[#4648d4] focus:ring-4 focus:ring-[#4648d4]/20 placeholder:text-gray-400" />
                 </div>
 
-                <button type="submit" className="group relative w-full py-3 rounded-xl bg-gradient-to-r from-[#4648d4] to-[#6b38d4] text-white font-semibold overflow-hidden shadow-lg shadow-[#4648d4]/30 transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer">
-                    <span className="relative z-10">Login</span>
+                <button type="submit" disabled={submitting} className="group relative w-full py-3 rounded-xl bg-gradient-to-r from-[#4648d4] to-[#6b38d4] text-white font-semibold overflow-hidden shadow-lg shadow-[#4648d4]/30 transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+                    <span className="relative z-10">{submitting ? "Logging in..." : "Login"}</span>
                     <span className="absolute top-0 -left-[120%] h-full w-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:left-[150%] transition-all duration-1000" />
                 </button>
             </form>
