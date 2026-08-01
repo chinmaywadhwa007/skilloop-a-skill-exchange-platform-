@@ -11,7 +11,11 @@ const transporter = nodemailer.createTransport({
     : undefined,
 });
 
-async function sendMail(to: string, subject: string, html: string) {
+async function sendMail(
+  to: string,
+  subject: string,
+  html: string,
+): Promise<void> {
   // If SMTP isn't configured (local dev), just log instead of throwing.
   if (!env.SMTP_HOST || !env.SMTP_USER) {
     logger.warn(
