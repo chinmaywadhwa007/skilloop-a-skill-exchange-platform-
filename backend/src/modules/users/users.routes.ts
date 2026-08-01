@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { AuthController } from "../auth/controllers/auth.controller.js";
-import { validate } from "@/middleware/validate.middleware.js";
-import { authenticate } from "@/middleware/auth.middleware.js";
+import { validate } from "../../middleware/validate.middleware.js";
+import { authenticate } from "../../middleware/auth.middleware.js";
 
 import {
   registerSchema,
