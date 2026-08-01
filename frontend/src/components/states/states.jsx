@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 
-const Counter = ({ end, suffix }) => {
+const Counter = ({ end, suffix, color }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     let start = 0;
-
     const duration = 2000;
     const increment = end / (duration / 20);
 
@@ -24,7 +23,10 @@ const Counter = ({ end, suffix }) => {
   }, [end]);
 
   return (
-    <h2 className="text-5xl font-bold">
+    <h2
+      className="text-5xl lg:text-6xl font-extrabold tracking-tight"
+      style={{ color }}
+    >
       {count}
       {suffix}
     </h2>
@@ -33,43 +35,46 @@ const Counter = ({ end, suffix }) => {
 
 const Stats = () => {
   return (
-    <section className="py-24 bg-white">
-  <div className="max-w-7xl mx-auto px-6">
-    <div className="grid md:grid-cols-3 gap-12">
+    <section className="py-20 bg-app transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid md:grid-cols-3 gap-12 text-center glass-card p-10 rounded-3xl border border-theme">
 
-      <div className="text-center">
-        <h2 className="text-6xl font-bold text-[#4648d4]">
-          0K+
-        </h2>
+          <div className="p-4 hover:scale-105 transition-transform duration-300">
+            <Counter
+              end={500}
+              suffix="K+"
+              color="var(--brand-primary)"
+            />
+            <p className="mt-3 text-xs font-bold uppercase tracking-[3px] text-muted">
+              Learners Globally
+            </p>
+          </div>
 
-        <p className="mt-2 text-xs font-bold uppercase tracking-[3px] text-gray-500">
-          Learners Globally
-        </p>
+          <div className="p-4 hover:scale-105 transition-transform duration-300">
+            <Counter
+              end={10}
+              suffix="K+"
+              color="var(--brand-secondary)"
+            />
+            <p className="mt-3 text-xs font-bold uppercase tracking-[3px] text-muted">
+              Expert Mentors
+            </p>
+          </div>
+
+          <div className="p-4 hover:scale-105 transition-transform duration-300">
+            <Counter
+              end={2}
+              suffix="M+"
+              color="var(--accent)"
+            />
+            <p className="mt-3 text-xs font-bold uppercase tracking-[3px] text-muted">
+              Coins Earned
+            </p>
+          </div>
+
+        </div>
       </div>
-
-      <div className="text-center">
-        <h2 className="text-6xl font-bold text-[#6b38d4]">
-          0k+
-        </h2>
-
-        <p className="mt-2 text-xs font-bold uppercase tracking-[3px] text-gray-500">
-          Expert Mentors
-        </p>
-      </div>
-
-      <div className="text-center">
-        <h2 className="text-6xl font-bold text-[#006577]">
-          0M+
-        </h2>
-
-        <p className="mt-2 text-xs font-bold uppercase tracking-[3px] text-gray-500">
-          Coins Earned
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
+    </section>
   );
 };
 

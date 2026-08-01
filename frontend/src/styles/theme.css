@@ -1,25 +1,166 @@
-@theme {
+:root {
+  /* ============================= */
+  /* Brand */
+  /* ============================= */
+  --brand-primary: #4F46E5;      /* Indigo */
+  --brand-secondary: #7C3AED;    /* Purple */
 
-  --color-primary: #4648d4;
-  --color-secondary: #6b38d4;
+  /* ============================= */
+  /* Background */
+  /* ============================= */
+  --bg-page: #F8FAFC;            /* Soft slate background */
+  --bg-surface: #FFFFFF;         /* Cards/Navbar */
+  --bg-surface-hover: #F1F5F9;   /* Hover background */
+  --bg-input: #F1F5F9;           /* Inputs/Form controls */
 
-  --color-background: #f8f9ff;
+  /* ============================= */
+  /* Text */
+  /* ============================= */
+  --text-primary: #0F172A;       /* Slate-900 */
+  --text-secondary: #64748B;     /* Slate-500 */
+  --text-muted: #94A3B8;         /* Slate-400 */
 
-  --color-surface: #f8f9ff;
-  --color-surface-container: #e5eeff;
-  --color-surface-container-low: #eff4ff;
-  --color-surface-container-high: #dce9ff;
-  --color-surface-container-highest: #d3e4fe;
+  /* ============================= */
+  /* Borders */
+  /* ============================= */
+  --border: #CBD5E1;
+  --border-light: #E2E8F0;
 
-  --color-on-background: #0b1c30;
-  --color-on-surface: #0b1c30;
-  --color-on-surface-variant: #464554;
+  /* ============================= */
+  /* Primary Button */
+  /* ============================= */
+  --btn-primary-start: #4F46E5;
+  --btn-primary-end: #7C3AED;
+  --btn-primary-text: #FFFFFF;
 
-  --color-outline: #767586;
-  --color-outline-variant: #c7c4d7;
+  /* ============================= */
+  /* Secondary Button */
+  /* ============================= */
+  --btn-secondary-bg: #FFFFFF;
+  --btn-secondary-text: #0F172A;
+  --btn-secondary-border: #CBD5E1;
 
-  --color-primary-container: #6063ee;
-  --color-secondary-container: #8455ef;
-  --color-tertiary-container: #008096;
+  /* ============================= */
+  /* Glassmorphism */
+  /* ============================= */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(226, 232, 240, 0.85);
+  --glass-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.08);
 
+  /* ============================= */
+  /* Accent */
+  /* ============================= */
+  --accent: #06B6D4;             /* Cyan */
+}
+
+.dark {
+  /* ============================= */
+  /* Brand */
+  /* ============================= */
+  --brand-primary: #6366F1;
+  --brand-secondary: #8B5CF6;
+
+  /* ============================= */
+  /* Background */
+  /* ============================= */
+  --bg-page: #0B0F19;            /* Rich dark space */
+  --bg-surface: #111827;         /* Dark Slate card surface */
+  --bg-surface-hover: #1F2937;   /* Elevated hover */
+  --bg-input: #1E293B;           /* Dark input background */
+
+  /* ============================= */
+  /* Text */
+  /* ============================= */
+  --text-primary: #F8FAFC;       /* Off-white */
+  --text-secondary: #94A3B8;     /* Muted slate */
+  --text-muted: #64748B;
+
+  /* ============================= */
+  /* Borders */
+  /* ============================= */
+  --border: #334155;
+  --border-light: #1E293B;
+
+  /* ============================= */
+  /* Primary Button */
+  /* ============================= */
+  --btn-primary-start: #6366F1;
+  --btn-primary-end: #8B5CF6;
+  --btn-primary-text: #FFFFFF;
+
+  /* ============================= */
+  /* Secondary Button */
+  /* ============================= */
+  --btn-secondary-bg: #1E293B;
+  --btn-secondary-text: #F8FAFC;
+  --btn-secondary-border: #334155;
+
+  /* ============================= */
+  /* Glassmorphism */
+  /* ============================= */
+  --glass-bg: rgba(11, 15, 25, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.6);
+
+  /* ============================= */
+  /* Accent */
+  /* ============================= */
+  --accent: #2DD4BF;
+}
+
+/* ============================= */
+/* Semantic Utility Classes */
+/* ============================= */
+
+.bg-app {
+  background-color: var(--bg-page);
+  transition: background-color 0.3s ease;
+}
+
+.bg-surface {
+  background-color: var(--bg-surface);
+  transition: background-color 0.3s ease;
+}
+
+.text-theme {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.text-theme-nav {
+  color: var(--text-primary);
+}
+
+.text-muted {
+  color: var(--text-secondary);
+}
+
+.border-theme {
+  border-color: var(--border-light);
+}
+
+.border-outline {
+  border-color: var(--border);
+}
+
+/* Primary Button */
+.btn-primary {
+  background-image: linear-gradient(
+    to right,
+    var(--btn-primary-start),
+    var(--btn-primary-end)
+  );
+  color: var(--btn-primary-text);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 1px solid var(--btn-secondary-border);
+}
+
+/* Accent */
+.text-accent {
+  color: var(--accent);
 }

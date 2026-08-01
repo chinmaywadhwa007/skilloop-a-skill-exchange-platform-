@@ -1,22 +1,18 @@
-// this  is the third party services from the react used to create the smooth animmation and transition
-
 import { motion } from "framer-motion";
-//they both are hooks and hooks are the imp thing in the react or we can say that they are the special function that allows us to use react features such as state and routing inside the functional components 
-
-// what is usenavigate means when we have to navigate through pages 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-// this is the funnctional component in the js function that return jsx it is the morden way of creacting react compeninents and supports hooks like usettate and useeffect
+import { Sparkles, ArrowRight, Award, Zap } from "lucide-react";
+
+import HeroScene from "./HeroScene/HeroScene";
+
 const Hero = () => {
   const navigate = useNavigate();
 
-  const [rotate, setRotate] =
-    // usestetes is used to manage components state. whenever the state changes using the setter function react re-renders the components with updated values 
-    useState({
-      x: 0,
-      y: 0,
-    });
-    // this is the eventhandler as the eventhandler in the norrmal js in react is similar to js but use the chamelcase syntaxx such as onclick and onchange 
+  const [rotate, setRotate] = useState({
+    x: 0,
+    y: 0,
+  });
+
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
 
@@ -26,9 +22,9 @@ const Hero = () => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateY = ((x - centerX) / centerX) * 10;
-    const rotateX = ((centerY - y) / centerY) * 10;
-    // this is  the virtual dom where we use  the  mouse to  rotate the components but it didn't touch the real dom 
+    const rotateY = ((x - centerX) / centerX) * 8;
+    const rotateX = ((centerY - y) / centerY) * 8;
+
     setRotate({
       x: rotateX,
       y: rotateY,
@@ -43,147 +39,86 @@ const Hero = () => {
   };
 
   return (
-    // this whole line is the jsx it looks like html but in actual its jsx 
-    // jsx stand for js xml it  allows us to write the html like structure inside the js and react convert behind the scane into the functional call 
-    <section className="pt-20 min-h-screen relative overflow-hidden">
+    <section className="pt-28 pb-16 min-h-screen relative overflow-hidden bg-app text-theme transition-colors duration-300">
+      {/* Background Glow Blobs */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div
+          className="absolute top-[-10%] left-[-10%] w-[45%] h-[45%] opacity-25 dark:opacity-20 rounded-full blur-[140px] transition-all"
+          style={{
+            backgroundColor: "var(--brand-primary)",
+          }}
+        />
 
-      {/* Background Blobs */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#4648d4] opacity-20 rounded-full blur-[120px]" />
-
-        <div className="absolute bottom-[-10%] right-[-10%] w-[35%] h-[35%] bg-[#6b38d4] opacity-20 rounded-full blur-[120px]" />
+        <div
+          className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] opacity-25 dark:opacity-20 rounded-full blur-[140px] transition-all"
+          style={{
+            backgroundColor: "var(--brand-secondary)",
+          }}
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center min-h-[90vh]">
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center min-h-[80vh]">
 
         {/* LEFT SIDE */}
         <motion.div
-          initial={{ opacity: 0, x: -80 }}
+          initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
 
-          <div className="inline-block bg-[#e1e0ff] text-[#2f2ebe] px-4 py-2 rounded-full text-xs text-label-sm font-bold, font-semibold">
-            NEW: AI-POWERED SKILL MATCHING
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-surface border border-theme text-theme shadow-xs">
+            <Sparkles size={14} className="text-amber-500" />
+            <span>NEW: AI-POWERED SKILL MATCHING</span>
           </div>
 
-          <h1 className="mt-2  text-[72px] leading-[80px] font-extrabold text-2xl">
+          <h1 className="mt-4 text-6xl lg:text-7xl leading-[1.1] font-extrabold text-[var(--text-primary)] tracking-tight">
             Learn,
             <br />
             Teach,
             <br />
-
-            <span className="bg-gradient-to-r from-[#4648d4] to-[#6b38d4] bg-clip-text text-transparent">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">
               Earn.
             </span>
           </h1>
 
-          <p className="mt-6 text-lg text-gray-600 max-w-xl">
+          <p className="mt-6 text-lg lg:text-xl max-w-xl text-[var(--text-secondary)] leading-relaxed">
             The ultimate high-end ecosystem for peer-to-peer knowledge exchange.
             Master new skills, mentor rising stars, and unlock financial rewards.
           </p>
 
-          <div className="mt-10 flex gap-4">
+          <div className="mt-10 flex flex-wrap gap-4 items-center">
 
             <motion.button
-              whileHover={{
-                scale: 1.05,
-                y: -3,
-              }}
-              whileTap={{
-                scale: 0.95,
-              }}
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => navigate("/register")}
-              className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#4648d4] to-[#6b38d4] text-white font-semibold shadow-lg cursor-pointer"
+              className="btn-primary px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-indigo-500/25 cursor-pointer flex items-center gap-2"
             >
-              Get Started
+              <span>Get Started</span>
+              <ArrowRight size={18} />
             </motion.button>
 
             <motion.button
-              whileHover={{
-                scale: 1.05,
-                y: -4,
-              }}
-              whileTap={{
-                scale: 0.95,
-              }}
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => navigate("/marketplace")}
-              className="relative overflow-hidden  px-8 py-4 rounded-2xl backdrop-blur-xl   bg-white/20 border  border-white/30 shadow-lg  text-[#4648d4] font-semibold  cursor-pointer transition-all  duration-300 hover:shadow-[0_0_30px_rgba(70,72,212,0.35)]  hover:border-[#4648d4]/40"
+              className="btn-secondary px-8 py-4 rounded-xl font-semibold shadow-sm cursor-pointer transition-all duration-300"
             >
-              <span className="relative z-10">
-                Explore Skills
-              </span>
-
-              {/* Shine Effect */}
-              <span
-                className=" absolute  top-0    h-full w-1/2    via-white/60 to-transparent skew-x-12  transition-all  duration-700  group-hover:left-[150%] "
-              />
+              Explore Skills
             </motion.button>
 
           </div>
 
         </motion.div>
 
-        {/* image section */}
+        {/* RIGHT SIDE 3D HERO ILLUSTRATION */}
         <motion.div
-          onMouseMove={handleMouseMove}
-          onMouseLeave={resetRotation}
-          initial={{ opacity: 0, x: 80 }}
-          animate={{
-            opacity: 1,
-            x: 0,
-            rotateX: rotate.x,
-            rotateY: rotate.y,
-            y: [0, -10, 0],
-          }}
-          transition={{
-            opacity: { duration: 0.8 },
-            x: { duration: 0.8 },
-            rotateX: {
-              type: "spring",
-              stiffness: 120,
-              damping: 15,
-            },
-            rotateY: {
-              type: "spring",
-              stiffness: 120,
-              damping: 15,
-            },
-            y: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "circIn",
-            },
-          }}
-          style={{
-            transformStyle: "preserve-3d",
-            perspective: "1000px",
-          }}
-          className="relative"
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative w-full"
         >
-
-          <div className="glass-card p-4 rounded-[2rem] aspect-square flex items-center justify-center relative overflow-hidden group text-label-sm ,font-bold">
-
-            <img
-              src="../../../public/ChatGPT Image Jun 4, 2026, 09_46_57 PM.png"
-              alt="SkillLoop Hero"
-              className="w-full h-full object-cover rounded-xl transition-all duration-700 group-hover:scale-110"
-            />
-
-            <div className="absolute top-4 left-4 glass-card px-4 py-2 rounded-lg flex items-center gap-2">
-
-              <span className="text-[#6b38d4] text-lg">
-                ⭐
-              </span>
-
-              <span className="text-sm , text-label-sm, font-bold, bg-amber-950 text-amber-50">
-                Top Rated: Web3 Design
-              </span>
-
-            </div>
-
-          </div>
-
+          <HeroScene />
         </motion.div>
 
       </div>

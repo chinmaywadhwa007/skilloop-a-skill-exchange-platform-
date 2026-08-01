@@ -3,34 +3,51 @@ import { createContext, useContext, useState } from "react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(() => {
-        try {
-            return JSON.parse(localStorage.getItem("currentUser")) || null;
-        } catch {
-            return null;
-        }
-    });
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("currentUser")) || null;
+    } catch {
+      return null;
+    }
+  });
 
-    const login = (userData) => {
-        const { password, ...safeUser } = userData;
-        localStorage.setItem("currentUser", JSON.stringify(safeUser));
-        setCurrentUser(safeUser);
-    };
+  const login = (authData) => {
+    const { user, accessToken, refreshToken } = authData;
 
-    const logout = () => {
-        localStorage.removeItem("currentUser");
-        setCurrentUser(null);
-    };
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
 
-    return (
-        <AuthContext.Provider value={{ currentUser, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    setCurrentUser(user);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+
+    setCurrentUser(null);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        currentUser,
+        login,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) throw new Error("useAuth must be used within AuthProvider");
-    return context;
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used within AuthProvider");
+  }
+
+  return context;
 };
