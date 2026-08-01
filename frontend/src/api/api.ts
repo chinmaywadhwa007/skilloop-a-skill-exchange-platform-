@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5001/api/v1",
+  baseURL: "https://skilloop-a-skill-exchange-platform-5.onrender.com/api/v1",
   withCredentials: true,
   timeout: 10000,
   headers: {
@@ -19,7 +19,7 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export default api;
